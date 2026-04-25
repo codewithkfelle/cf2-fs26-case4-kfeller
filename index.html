@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+
+  <style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        max-width: 700px;
+        margin: 40px auto;
+        background:#ffffff;
+        color: #000000;
+    }
+    input {
+        width: 100%;
+        padding: 14px;
+        margin-bottom: 12px;
+        font-size: 16px;
+
+        border-radius: 8px;
+        border: 1px solid #ccc
+    }
+    button {
+        padding: 14px;
+        width: 100%;
+        background: #400032;
+        color: #fffcf3;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+    .box {
+        background: #fffcf3;
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .result {
+        margin-top: 20px;
+        font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div style="text-align:center;">
+    <h2>Peergroup Rechner</h2>
+</div>
+
+
+<div class="box">
+
+  <h3>Input</h3>
+  <input id="unternehmen1" placeholder="Unternehmen 1">
+  <input id="unternehmen2" placeholder="Unternehmen 2">
+  <input id="unternehmen3" placeholder="Unternehmen 3">
+  <input id="unternehmen4" placeholder="Unternehmen 4">
+  <input id="unternehmen5" placeholder="Unternehmen 5">
+  <input id="unternehmen6" placeholder="Unternehmen 6">
+  <input id="unternehmen7" placeholder="Unternehmen 7">
+  <input id="unternehmen8" placeholder="Unternehmen 8">
+  <input id="unternehmen9" placeholder="Unternehmen 9">
+  <input id="unternehmen10" placeholder="Unternehmen 10">
+
+  <button onclick="calc()">Berechnen</button>
+
+  <div class="result" id="output"></div>
+</div>
+
+<script>
+function calc() {
+    const unternehmen1 = +document.getElementById('unternehmen1').value || 0;
+    const unternehmen2 = +document.getElementById('unternehmen2').value || 0;
+    const unternehmen3 = +document.getElementById('unternehmen3').value || 0;
+    const unternehmen4 = +document.getElementById('unternehmen4').value || 0;
+    const unternehmen5 = +document.getElementById('unternehmen5').value || 0;
+    const unternehmen6 = +document.getElementById('unternehmen6').value || 0;
+    const unternehmen7 = +document.getElementById('unternehmen7').value || 0;
+    const unternehmen8 = +document.getElementById('unternehmen8').value || 0;
+    const unternehmen9 = +document.getElementById('unternehmen9').value || 0;
+    const unternehmen10 = +document.getElementById('unternehmen10').value || 0;
+
+
+
+  // Calculations
+
+   const average = (unternehmen1 + unternehmen2 + unternehmen3 + unternehmen4 + unternehmen5 + unternehmen6 + unternehmen7 + unternehmen8
+                            + unternehmen9 + unternehmen10) / 10;
+//   const ist = ende - anfang;
+//   const diff = ist - soll;
+
+//   const tipsTotal = tipsCard + tipsCash + diff;
+//   const front = tipsTotal * 0.65;
+//   const kitchen = tipsTotal * 0.35;
+
+  document.getElementById('output').innerHTML = `
+    <h3>Resultate</h3>
+    Unternehmen 1: <b>${unternehmen1.toFixed(2)}</b><br>
+    Unternehmen 2: <b>${unternehmen2.toFixed(2)}</b><br>
+    Unternehmen 3: <b>${unternehmen3.toFixed(2)}</b><br>
+    Unternehmen 4: <b>${unternehmen4.toFixed(2)}</b><br>
+    Unternehmen 5: <b>${unternehmen5.toFixed(2)}</b><br><br>
+
+    Durchschnitt: <b>${avergae.toFixed(2)}</b><br>
+  `;
+}
+</script>
+
+</body>
+</html>
