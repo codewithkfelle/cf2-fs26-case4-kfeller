@@ -46,69 +46,100 @@
     }
   </style>
 </head>
-<body>
 
+
+
+
+<body>
 <div style="text-align:center;">
-    <h2>Peergroup Rechner</h2>
+    <h2>Peer Beta Rechner</h2>
+    <p>Gib Equity-Beta sowie das Verhältnis FK/EK der Peers ein:</p>
 </div>
 
-
 <div class="box">
-
   <h3>Input</h3>
-  <input id="unternehmen1" placeholder="Unternehmen 1">
-  <input id="unternehmen2" placeholder="Unternehmen 2">
-  <input id="unternehmen3" placeholder="Unternehmen 3">
-  <input id="unternehmen4" placeholder="Unternehmen 4">
-  <input id="unternehmen5" placeholder="Unternehmen 5">
-  <input id="unternehmen6" placeholder="Unternehmen 6">
-  <input id="unternehmen7" placeholder="Unternehmen 7">
-  <input id="unternehmen8" placeholder="Unternehmen 8">
-  <input id="unternehmen9" placeholder="Unternehmen 9">
-  <input id="unternehmen10" placeholder="Unternehmen 10">
 
-  <button onclick="calc()">Berechnen</button>
+  
+
+  <button onclick="calculate()">Berechnen</button>
 
   <div class="result" id="output"></div>
+
+  <h3>Zielkapitalstruktur (FK/EK)</h3>
+  FK/EK: <input id="target_finanzierungsverhältniss" value="0.0">
 </div>
 
 <script>
-function calc() {
-    const unternehmen1 = +document.getElementById('unternehmen1').value || 0;
-    const unternehmen2 = +document.getElementById('unternehmen2').value || 0;
-    const unternehmen3 = +document.getElementById('unternehmen3').value || 0;
-    const unternehmen4 = +document.getElementById('unternehmen4').value || 0;
-    const unternehmen5 = +document.getElementById('unternehmen5').value || 0;
-    const unternehmen6 = +document.getElementById('unternehmen6').value || 0;
-    const unternehmen7 = +document.getElementById('unternehmen7').value || 0;
-    const unternehmen8 = +document.getElementById('unternehmen8').value || 0;
-    const unternehmen9 = +document.getElementById('unternehmen9').value || 0;
-    const unternehmen10 = +document.getElementById('unternehmen10').value || 0;
-
-
-
-  // Calculations
-
-   const average = (unternehmen1 + unternehmen2 + unternehmen3 + unternehmen4 + unternehmen5 + unternehmen6 + unternehmen7 + unternehmen8
-                            + unternehmen9 + unternehmen10) / 10;
-//   const ist = ende - anfang;
-//   const diff = ist - soll;
-
-//   const tipsTotal = tipsCard + tipsCash + diff;
-//   const front = tipsTotal * 0.65;
-//   const kitchen = tipsTotal * 0.35;
-
-  document.getElementById('output').innerHTML = `
-    <h3>Resultate</h3>
-    Unternehmen 1: <b>${unternehmen1.toFixed(2)}</b><br>
-    Unternehmen 2: <b>${unternehmen2.toFixed(2)}</b><br>
-    Unternehmen 3: <b>${unternehmen3.toFixed(2)}</b><br>
-    Unternehmen 4: <b>${unternehmen4.toFixed(2)}</b><br>
-    Unternehmen 5: <b>${unternehmen5.toFixed(2)}</b><br><br>
-
-    Durchschnitt: <b>${avergae.toFixed(2)}</b><br>
-  `;
+for(let i=0;i<10;i++){
+  document.getElementById("inputs").innerHTML +=
+    "Beta: <input id='beta"+i+"'> FK/EK: <input id='finanzierungsverhältnis"+i+"'><br>";
 }
+
+// function calc() {
+//     const unternehmen1 = +document.getElementById('unternehmen1').value || 0;
+//     const unternehmen2 = +document.getElementById('unternehmen2').value || 0;
+//     const unternehmen3 = +document.getElementById('unternehmen3').value || 0;
+//     const unternehmen4 = +document.getElementById('unternehmen4').value || 0;
+//     const unternehmen5 = +document.getElementById('unternehmen5').value || 0;
+//     const unternehmen6 = +document.getElementById('unternehmen6').value || 0;
+//     const unternehmen7 = +document.getElementById('unternehmen7').value || 0;
+//     const unternehmen8 = +document.getElementById('unternehmen8').value || 0;
+//     const unternehmen9 = +document.getElementById('unternehmen9').value || 0;
+//     const unternehmen10 = +document.getElementById('unternehmen10').value || 0;
+
+
+
+//   // Calculations
+
+//    const average = (unternehmen1 + unternehmen2 + unternehmen3 + unternehmen4 + unternehmen5 + unternehmen6 + unternehmen7 + unternehmen8
+//                             + unternehmen9 + unternehmen10) / 10;
+// //   const ist = ende - anfang;
+// //   const diff = ist - soll;
+
+// //   const tipsTotal = tipsCard + tipsCash + diff;
+// //   const front = tipsTotal * 0.65;
+// //   const kitchen = tipsTotal * 0.35;
+
+//   document.getElementById('output').innerHTML = `
+//     <h3>Resultate</h3>
+//     Unternehmen 1: <b>${unternehmen1.toFixed(2)}</b><br>
+//     Unternehmen 2: <b>${unternehmen2.toFixed(2)}</b><br>
+//     Unternehmen 3: <b>${unternehmen3.toFixed(2)}</b><br>
+//     Unternehmen 4: <b>${unternehmen4.toFixed(2)}</b><br>
+//     Unternehmen 5: <b>${unternehmen5.toFixed(2)}</b><br><br>
+
+//     Durchschnitt: <b>${avergae.toFixed(2)}</b><br>
+//   `;
+// }
+
+function calculate(){
+  let assetBetas=[];
+
+  for(let i=0;i<10;i++){
+    let beta = parseFloat(document.getElementById("beta"+i).value);
+    let de = parseFloat(document.getElementById("finanzierungsverhältnis"+i).value);
+
+    if(!isNaN(beta) && !isNaN(de)){
+      let betaA = beta / (1 + de); // FK-Beta = 0
+      assetBetas.push(betaA);
+    }
+  }
+
+  assetBetas.sort((a,b)=>a-b);
+
+  let mean = assetBetas.reduce((a,b)=>a+b,0)/assetBetas.length;
+  let median = assetBetas[Math.floor(assetBetas.length/2)];
+
+  let targetDE = parseFloat(document.getElementById("targetDE").value);
+
+  let relevered = mean * (1 + targetDE);
+
+  document.getElementById("output").innerHTML =
+    "Mean Asset Beta: "+mean.toFixed(3)+"<br>"+
+    "Median Asset Beta: "+median.toFixed(3)+"<br>"+
+    "Relevered Beta: "+relevered.toFixed(3);
+}
+
 </script>
 
 </body>
