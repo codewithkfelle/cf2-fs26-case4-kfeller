@@ -82,8 +82,8 @@ FK/EK:
 
 <h3>Relevering Methode</h3>
 <select id="method">
-  <option value="mean">Mean</option>
-  <option value="median">Median</option>
+  <option value="Mean">Mean</option>
+  <option value="Median">Median</option>
 </select>
 
 <button onclick="calculate()">Berechnen</button>
@@ -153,7 +153,7 @@ function calculate(){
     <h3>Resultate</h3>
     Mean: <b>${mean.toFixed(3)}</b><br>
     Median: <b>${median.toFixed(3)}</b><br>
-    Verwendet: <b>${method}</b><br>
+    Methode: <b>${method}</b><br>
     Relevered Beta: <b>${relevered.toFixed(3)}</b>
   `;
 
