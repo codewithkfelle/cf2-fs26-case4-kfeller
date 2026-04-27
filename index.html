@@ -1,142 +1,3 @@
-<!-- <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-
-  <style>
-    * {
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: Arial, sans-serif;
-        font-weight: bold;
-        max-width: 700px;
-        margin: 40px auto;
-        background:#ffffff;
-        color: #000000;
-    }
-    input {
-        width: 100%;
-        padding: 14px;
-        margin-bottom: 12px;
-        font-size: 16px;
-
-        border-radius: 8px;
-        border: 1px solid #ccc
-    }
-    button {
-        padding: 14px;
-        width: 100%;
-        background: #400032;
-        color: #fffcf3;
-        border: none;
-        border-radius: 8px;
-        font-size: 16px;
-    }
-    .box {
-        background: #fffcf3;
-        padding: 20px;
-        border-radius: 16px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    .result {
-        margin-top: 20px;
-        font-weight: bold;
-    }
-  </style>
-</head>
-
-
-
-<body>
-
-<div style="text-align:center;">
-    <h2>Peer-Unternehmen Beta Rechner</h2>
-    <p>Gib das Equity-Beta sowie das FK/EK - Ratio der Peer-Unternehmen ein:</p>
-</div>
-
-<div class="box">
-  <div id="inputs"></div>
-
-  <h3>Zielkapitalstruktur (FK/EK)</h3>
-  FK/EK:
-  <input id="target_fk_ek_ratio" value="0.0">
-
-  <button onclick="calculate()">Berechnen</button>
-
-  <div class="result" id="output"></div>
-</div>
-
-<script>
-for(let i = 0; i < 10; i++){
-  document.getElementById("inputs").innerHTML += `
-    <div>
-      <b>Peer ${i+1}</b><br>
-      Beta:
-      <input id="beta${i}" placeholder="z.B. 1.2">
-      FK/EK - Ratio:
-      <input id="fk_ek_ratio${i}" placeholder="z.B. 0.5">
-    </div>
-    <hr>
-  `;
-}
-
-function calculate(){
-  let assetBetas = [];
-
-  for(let i = 0; i < 10; i++){
-    let beta = parseFloat(document.getElementById("beta"+i).value);
-    let fk_ek_ratio = parseFloat(document.getElementById("fk_ek_ratio"+i).value);
-
-    if(!isNaN(beta) && !isNaN(fk_ek_ratio)){
-      let betaA = beta / (1 + fk_ek_ratio); // assumes debt beta = 0
-      assetBetas.push(betaA);
-    }
-  }
-
-  if(assetBetas.length === 0){
-    document.getElementById("output").innerHTML =
-      "Bitte gültige Werte eingeben.";
-    return;
-  }
-
-  // sort ascending
-  assetBetas.sort((a,b)=>a-b);
-
-  // mean
-  let mean = assetBetas.reduce((a,b)=>a+b,0) / assetBetas.length;
-
-  // median (correct for even + odd)
-  let median;
-  if(assetBetas.length % 2 === 0){
-    let mid = assetBetas.length / 2;
-    median = (assetBetas[mid - 1] + assetBetas[mid]) / 2;
-  } else {
-    median = assetBetas[Math.floor(assetBetas.length / 2)];
-  }
-
-  // target capital structure
-  let target_fk_ek_ratio = parseFloat(document.getElementById("target_fk_ek_ratio").value) || 0;
-
-  let relevered = mean * (1 + target_fk_ek_ratio);
-
-  // output
-  document.getElementById("output").innerHTML = `
-    <h3>Resultate</h3>
-    Mean Asset-Beta: <b>${mean.toFixed(3)}</b><br>
-    Median Asset-Beta: <b>${median.toFixed(3)}</b><br>
-    Relevered Beta: <b>${relevered.toFixed(3)}</b>
-  `;
-}
-</script>
-
-</body>
-</html> -->
-
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -166,7 +27,7 @@ input, select {
 button {
     padding: 14px;
     width: 100%;
-    background: #400032;
+    background: #000000;
     color: #fffcf3;
     border: none;
     border-radius: 8px;
@@ -175,7 +36,7 @@ button {
 }
 
 .box {
-    background: #fffcf3;
+    background: #9a9997;
     padding: 20px;
     border-radius: 16px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -217,7 +78,7 @@ canvas {
 
 <h3>Zielkapitalstruktur</h3>
 FK/EK:
-<input id="target_ratio" value="0.0">
+<input id="target_ratio" placeholder="z.B. 0.6">
 
 <h3>Relevering Methode</h3>
 <select id="method">
@@ -243,7 +104,7 @@ for(let i = 0; i < 10; i++){
       Beta:
       <input id="beta${i}" placeholder="z.B. 1.2">
 
-      FK/EK:
+      FK/EK-Ratio:
       <input id="ratio${i}" placeholder="z.B. 0.5">
     </div>
   `;
