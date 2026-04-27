@@ -158,11 +158,10 @@ function calculate(){
 
   document.getElementById("output").innerHTML = `
     <h3>Resultate</h3>
-    Mean: <b>${mean.toFixed(3)}</b><br>
-    Median: <b>${median.toFixed(3)}</b><br>
-    Base Beta used: <b>${baseBeta.toFixed(3)}</b><br>
+    Mean: <b>${mean.toFixed(2)}</b><br>
+    Median: <b>${median.toFixed(2)}</b><br>
     Methode: <b>${method}</b><br>
-    Relevered Beta: <b>${relevered.toFixed(3)}</b>
+    Relevered Beta: <b>${relevered.toFixed(2)}</b>
   `;
 
   drawChart(assetBetas);
