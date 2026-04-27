@@ -110,7 +110,7 @@ for(let i = 0; i < 10; i++){
   `;
 }
 
-let chart; // global chart instance
+//let chart; // global chart instance
 
 function calculate(){
   let assetBetas = [];
@@ -129,8 +129,6 @@ function calculate(){
       "Bitte gültige Werte eingeben.";
     return;
   }
-
-  assetBetas.sort((a,b)=>a-b);
 
   let mean = assetBetas.reduce((a,b)=>a+b,0) / assetBetas.length;
 
@@ -164,32 +162,32 @@ function calculate(){
     Relevered Beta: <b>${relevered.toFixed(2)}</b>
   `;
 
-  drawChart(assetBetas);
+  //drawChart(assetBetas);
 }
 
-function drawChart(data){
-  let ctx = document.getElementById("chart").getContext("2d");
+// function drawChart(data){
+//   let ctx = document.getElementById("chart").getContext("2d");
 
-  if(chart){
-    chart.destroy();
-  }
+//   if(chart){
+//     chart.destroy();
+//   }
 
-  chart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: data.map((_, i) => "Peer " + (i+1)),
-      datasets: [{
-        label: "Asset Betas",
-        data: data
-      }]
-    },
-    options: {
-      scales: {
-        y: { beginAtZero: true }
-      }
-    }
-  });
-}
+//   chart = new Chart(ctx, {
+//     type: 'bar',
+//     data: {
+//       labels: data.map((_, i) => "Peer " + (i+1)),
+//       datasets: [{
+//         label: "Asset Betas",
+//         data: data
+//       }]
+//     },
+//     options: {
+//       scales: {
+//         y: { beginAtZero: true }
+//       }
+//     }
+//   });
+// }
 </script>
 
 </body>
