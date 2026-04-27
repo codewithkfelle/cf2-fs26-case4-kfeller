@@ -142,13 +142,14 @@ function calculate(){
     median = assetBetas[Math.floor(assetBetas.length/2)];
   }
 
-  let method = document.getElementById("method").value;
+  let method = document.getElementById("method").value.trim().toLowerCase();
+
   let baseBeta;
 
   if(method === "median"){
     baseBeta = median;
   } else {
-  baseBeta = mean;
+    baseBeta = mean;
   }
 
   let target = parseFloat(document.getElementById("target_ratio").value) || 0;
