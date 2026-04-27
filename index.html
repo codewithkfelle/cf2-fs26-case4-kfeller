@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
@@ -128,6 +128,199 @@ function calculate(){
     Median Asset-Beta: <b>${median.toFixed(3)}</b><br>
     Relevered Beta: <b>${relevered.toFixed(3)}</b>
   `;
+}
+</script>
+
+</body>
+</html> -->
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    max-width: 800px;
+    margin: 40px auto;
+    background:#ffffff;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 14px;
+    width: 100%;
+    background: #400032;
+    color: #fffcf3;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.box {
+    background: #fffcf3;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.peer {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #eee;
+}
+
+.peer-title {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.result {
+    margin-top: 20px;
+}
+
+canvas {
+    margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div style="text-align:center;">
+<h2>Peer-Unternehmen Beta Rechner</h2>
+<p>Equity-Beta und FK/EK der Peers eingeben</p>
+</div>
+
+<div class="box">
+
+<div id="inputs"></div>
+
+<h3>Zielkapitalstruktur</h3>
+FK/EK:
+<input id="target_ratio" value="0.0">
+
+<h3>Relevering Methode</h3>
+<select id="method">
+  <option value="mean">Mean</option>
+  <option value="median">Median</option>
+</select>
+
+<button onclick="calculate()">Berechnen</button>
+
+<div class="result" id="output"></div>
+
+<canvas id="chart"></canvas>
+
+</div>
+
+<script>
+// create inputs
+for(let i = 0; i < 10; i++){
+  document.getElementById("inputs").innerHTML += `
+    <div class="peer">
+      <div class="peer-title">Peer ${i+1}</div>
+
+      Beta:
+      <input id="beta${i}" placeholder="z.B. 1.2">
+
+      FK/EK:
+      <input id="ratio${i}" placeholder="z.B. 0.5">
+    </div>
+  `;
+}
+
+let chart; // global chart instance
+
+function calculate(){
+  let assetBetas = [];
+
+  for(let i = 0; i < 10; i++){
+    let beta = parseFloat(document.getElementById("beta"+i).value);
+    let ratio = parseFloat(document.getElementById("ratio"+i).value);
+
+    if(!isNaN(beta) && !isNaN(ratio)){
+      assetBetas.push(beta / (1 + ratio));
+    }
+  }
+
+  if(assetBetas.length === 0){
+    document.getElementById("output").innerHTML =
+      "Bitte gültige Werte eingeben.";
+    return;
+  }
+
+  assetBetas.sort((a,b)=>a-b);
+
+  let mean = assetBetas.reduce((a,b)=>a+b,0) / assetBetas.length;
+
+  let median;
+  if(assetBetas.length % 2 === 0){
+    let mid = assetBetas.length / 2;
+    median = (assetBetas[mid-1] + assetBetas[mid]) / 2;
+  } else {
+    median = assetBetas[Math.floor(assetBetas.length/2)];
+  }
+
+  let method = document.getElementById("method").value;
+  let baseBeta = method === "median" ? median : mean;
+
+  let target = parseFloat(document.getElementById("target_ratio").value) || 0;
+
+  let relevered = baseBeta * (1 + target);
+
+  document.getElementById("output").innerHTML = `
+    <h3>Resultate</h3>
+    Mean: <b>${mean.toFixed(3)}</b><br>
+    Median: <b>${median.toFixed(3)}</b><br>
+    Verwendet: <b>${method}</b><br>
+    Relevered Beta: <b>${relevered.toFixed(3)}</b>
+  `;
+
+  drawChart(assetBetas);
+}
+
+function drawChart(data){
+  let ctx = document.getElementById("chart").getContext("2d");
+
+  if(chart){
+    chart.destroy();
+  }
+
+  chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: data.map((_, i) => "Peer " + (i+1)),
+      datasets: [{
+        label: "Asset Betas",
+        data: data
+      }]
+    },
+    options: {
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
 }
 </script>
 
