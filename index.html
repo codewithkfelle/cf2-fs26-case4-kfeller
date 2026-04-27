@@ -143,7 +143,13 @@ function calculate(){
   }
 
   let method = document.getElementById("method").value;
-  let baseBeta = method === "median" ? median : mean;
+  let baseBeta;
+
+  if(method === "median"){
+    baseBeta = median;
+  } else {
+  baseBeta = mean;
+  }
 
   let target = parseFloat(document.getElementById("target_ratio").value) || 0;
 
