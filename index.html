@@ -52,18 +52,16 @@
 <body>
 
 <div style="text-align:center;">
-    <h2>Peer Beta Rechner</h2>
-    <p>Gib Equity-Beta sowie das Verhältnis FK/EK der Peers ein:</p>
+    <h2>Peer-Unternehmen Beta Rechner</h2>
+    <p>Gib das Equity-Beta sowie das FK/EK - Ratio der Peer-Unternehmen ein:</p>
 </div>
 
 <div class="box">
-  <h3>Input</h3>
-
   <div id="inputs"></div>
 
   <h3>Zielkapitalstruktur (FK/EK)</h3>
   FK/EK:
-  <input id="target_de" value="0.0">
+  <input id="target_fk_ek_ratio" value="0.0">
 
   <button onclick="calculate()">Berechnen</button>
 
@@ -77,8 +75,8 @@ for(let i = 0; i < 10; i++){
       <b>Peer ${i+1}</b><br>
       Beta:
       <input id="beta${i}" placeholder="z.B. 1.2">
-      FK/EK:
-      <input id="de${i}" placeholder="z.B. 0.5">
+      FK/EK - Ratio:
+      <input id="fk_ek_ratio${i}" placeholder="z.B. 0.5">
     </div>
     <hr>
   `;
@@ -89,10 +87,10 @@ function calculate(){
 
   for(let i = 0; i < 10; i++){
     let beta = parseFloat(document.getElementById("beta"+i).value);
-    let de   = parseFloat(document.getElementById("de"+i).value);
+    let fk_ek_ratio = parseFloat(document.getElementById("fk_ek_ratio"+i).value);
 
-    if(!isNaN(beta) && !isNaN(de)){
-      let betaA = beta / (1 + de); // assumes debt beta = 0
+    if(!isNaN(beta) && !isNaN(fk_ek_ratio)){
+      let betaA = beta / (1 + fk_ek_ratio); // assumes debt beta = 0
       assetBetas.push(betaA);
     }
   }
@@ -119,15 +117,15 @@ function calculate(){
   }
 
   // target capital structure
-  let targetDE = parseFloat(document.getElementById("target_de").value) || 0;
+  let target_fk_ek_ratio = parseFloat(document.getElementById("target_fk_ek_ratio").value) || 0;
 
-  let relevered = mean * (1 + targetDE);
+  let relevered = mean * (1 + target_fk_ek_ratio);
 
   // output
   document.getElementById("output").innerHTML = `
     <h3>Resultate</h3>
-    Mean Asset Beta: <b>${mean.toFixed(3)}</b><br>
-    Median Asset Beta: <b>${median.toFixed(3)}</b><br>
+    Mean Asset-Beta: <b>${mean.toFixed(3)}</b><br>
+    Median Asset-Beta: <b>${median.toFixed(3)}</b><br>
     Relevered Beta: <b>${relevered.toFixed(3)}</b>
   `;
 }
